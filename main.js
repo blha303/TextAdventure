@@ -19,6 +19,7 @@ function add_text_block(text) {
        	elem.className = "textblock";
        	elem.innerHTML = text;
        	document.getElementsByTagName("form")[0].insertBefore(elem,document.getElementById("inputblock"));
+	if (elem.getElementsByTagName("b")[0]) document.getElementById("top").innerHTML = "&nbsp;" + elem.getElementsByTagName("b")[0].innerHTML;
        	document.getElementById("inputblock").scrollIntoView();
 }
 
@@ -39,9 +40,6 @@ function submit_handler() {
 }
 
 window.onload = function() {
-       	httpGetAsync(root + "location.txt", function(resp){
-       		document.getElementById("top").innerHTML = resp;
-       	});
        	httpGetAsync(root + "l.txt", add_text_block);
 };
 document.onkeydown = function(e) {
