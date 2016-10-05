@@ -36,6 +36,7 @@ margin-bottom: 0px;
 }
 </style>
 <script>
+var root = window.location.protocol + "//" + window.location.hostname + "/";
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -45,8 +46,16 @@ function httpGetAsync(theUrl, callback)
             else callback("Command not recognized.");
         }
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.open("GET", theUrl, true); 
     xmlHttp.send(null);
+}
+
+function add_text_block(text) {
+	elem = document.createElement("div");
+	elem.className = "textblock";
+	elem.innerHTML = text;
+	document.getElementsByTagName("form")[0].insertBefore(elem,document.getElementById("inputblock"));
+	document.getElementById("inputblock").scrollIntoView();
 }
 
 function submit_handler() {
@@ -61,26 +70,22 @@ function submit_handler() {
 	form.insertBefore(e1,document.getElementById("inputblock"));
 	document.getElementById("inputblock").scrollIntoView();
 	// Command output
-	httpGetAsync(window.location.protocol + "//" + window.location.hostname + "/" + inp + ".txt", function(resp){
-		e2 = document.createElement("div");
-		e2.className = "textblock";
-		e2.innerHTML = resp;
-		form.insertBefore(e2,document.getElementById("inputblock"));
-		document.getElementById("inputblock").scrollIntoView();
-	});
+	httpGetAsync(root + inp + ".txt", add_text_block);
 }
+
+window.onload = function() {
+	httpGetAsync(root + "location.txt", function(resp){
+		document.getElementById("top").innerHTML = resp;
+	});
+	httpGetAsync(root + "l.txt", add_text_block);
+};
 </script>
 <body onload="document.getElementById('textentry').focus()">
 <center>
 <form class="container" onsubmit="submit_handler(); return false">
-<div id="top">&nbsp;West of Australia</div>
+<div id="top"></div>
 <div class="textblock">Welcome to HOME.<br>
-Release 1 / Serial number 123456 / CSS v6.14 Library 6/7<br>
-<b>West of Australia</b><br>
-You stand in front of a wall a thousand feet high.<br>
-You can see the outline of a door in the otherwise seamless pure-white<br>
-marble but there's no indication that it opens, or indeed has ever opened<br>
-before. You wonder what barriers lie ahead.</div>
+Release 1 / Serial number 123456 / CSS v6.14 Library 6/7</div>
 <div id="inputblock">>&nbsp;<input id="textentry" autocomplete=off></div>
 </form>
 </center>
