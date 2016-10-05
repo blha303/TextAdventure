@@ -1,0 +1,87 @@
+<style>
+body {
+background-color:black;
+}
+
+form.container {
+width:640px;
+height:480px;
+font-family:monospace;
+background-color:white;
+text-align:left;
+overflow:scroll;
+}
+
+div#top {
+margin:0;
+background-color:black;
+width:640px;
+color:white;
+}
+
+input#textentry {
+font-family:monospace;
+background:0;
+border:0;
+display:inline;
+outline:0;
+padding:0;
+width:600px;
+font-size:inherit;
+margin-top: 15px;
+}
+div.textblock {
+margin-top: 15px;
+margin-bottom: 0px;
+}
+</style>
+<script>
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) callback(xmlHttp.responseText);
+            else callback("Command not recognized.");
+        }
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function submit_handler() {
+	form = document.getElementsByTagName("form")[0];
+	inp = document.getElementById("textentry").value;
+	document.getElementById("textentry").value = "";
+	// Command feedback
+	e1 = document.createElement("div");
+	e1.className = "textblock";
+	t1 = document.createTextNode("> " + inp);
+	e1.appendChild(t1);
+	form.insertBefore(e1,document.getElementById("inputblock"));
+	document.getElementById("inputblock").scrollIntoView();
+	// Command output
+	httpGetAsync(window.location.protocol + "//" + window.location.hostname + "/" + inp + ".txt", function(resp){
+		e2 = document.createElement("div");
+		e2.className = "textblock";
+		e2.innerHTML = resp;
+		form.insertBefore(e2,document.getElementById("inputblock"));
+		document.getElementById("inputblock").scrollIntoView();
+	});
+}
+</script>
+<body onload="document.getElementById('textentry').focus()">
+<center>
+<form class="container" onsubmit="submit_handler(); return false">
+<div id="top">&nbsp;West of Australia</div>
+<div class="textblock">Welcome to HOME.<br>
+Release 1 / Serial number 123456 / CSS v6.14 Library 6/7<br>
+<b>West of Australia</b><br>
+You stand in front of a wall a thousand feet high.<br>
+You can see the outline of a door in the otherwise seamless pure-white<br>
+marble but there's no indication that it opens, or indeed has ever opened<br>
+before. You wonder what barriers lie ahead.</div>
+<div id="inputblock">>&nbsp;<input id="textentry" autocomplete=off></div>
+</form>
+</center>
+</body>
