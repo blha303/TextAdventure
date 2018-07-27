@@ -12,6 +12,8 @@ overflow:scroll;
 }
 
 div#top {
+font-family:monospace;
+text-align:left;
 margin:0;
 background-color:black;
 width:640px;

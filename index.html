@@ -1,13 +1,14 @@
-<!-- https://github.com/blha303/TextAdventure There are currently 46 valid commands -->
+<!-- https://github.com/blha303/TextAdventure -->
 <link href="style.css" rel="stylesheet" type="text/css">
 <script src="main.js"></script>
 <body onload="document.getElementById('textentry').focus()">
 <center>
-<form class="container" onsubmit="submit_handler(); return false">
 <div id="top"></div>
+<form class="container" onsubmit="submit_handler(); return false">
 <div class="textblock">Welcome to HOME.<br>
 Release 1 / Serial number 123456 / CSS v6.14 Library 6/7</div>
 <div id="inputblock">&gt;&nbsp;<input id="textentry" autocomplete=off></div>
 </form>
+<script>window.onload = function(){httpGetAsync("l.txt", add_text_block)}</script>
 </center>
 </body>

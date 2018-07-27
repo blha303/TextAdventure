@@ -39,9 +39,6 @@ function submit_handler() {
        	httpGetAsync(root + input_history[input_history_curpos] + ".txt", add_text_block);
 }
 
-window.onload = function() {
-       	httpGetAsync(root + "l.txt", add_text_block);
-};
 document.onkeydown = function(e) {
        	e = e || window.event;
        	input = document.getElementById("textentry");
